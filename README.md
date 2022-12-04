@@ -1,0 +1,1 @@
+My attempt to solve the [Advent of Code](https://adventofcode.com/) puzzles in F#, for fun and learning !
