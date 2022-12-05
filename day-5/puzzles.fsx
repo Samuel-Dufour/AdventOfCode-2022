@@ -47,6 +47,28 @@ let actions =
           dest = parts[2] })
     |> List.ofSeq
 
+// let doActions actions (rStacks: IDictionary<string, Stack<char>>) =
+//     let rec loop actions =
+//         match actions with
+//         | [] -> rStacks
+//         | { number = number
+//             origin = origin
+//             dest = dest } :: tail ->
+//             [ for _ in 1..number do
+//                   let extracted = rStacks[ origin ].Pop()
+//                   rStacks[ dest ].Push(extracted) |> ignore ]
+//             |> ignore
+
+//             loop tail
+
+//     loop actions
+
+// let re = doActions actions rStacks
+
+// [| for k in re.Keys do
+//        re[ k ].Pop() |]
+// |> System.String
+
 let doActions actions (rStacks: IDictionary<string, Stack<char>>) =
     let rec loop actions =
         match actions with
@@ -54,10 +76,13 @@ let doActions actions (rStacks: IDictionary<string, Stack<char>>) =
         | { number = number
             origin = origin
             dest = dest } :: tail ->
-            [ for _ in 1..number do
-                  let extracted = rStacks[ origin ].Pop()
-                  rStacks[ dest ].Push(extracted) |> ignore ]
-            |> ignore
+            let extracted =
+                [ for _ in 1..number do
+                      rStacks[ origin ].Pop() ]
+
+            extracted
+            |> List.rev
+            |> List.iter (fun ex -> rStacks[ dest ].Push(ex))
 
             loop tail
 
